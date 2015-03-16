@@ -139,19 +139,19 @@ def hangman(secretWord):
             # displayed once again before returning to the start of the While
             # loop
             print("Oops! You've already guessed that letter: %s" %
-            (getGuessedWord(secretWord, lettersGuessed)))
+            (getGuesûedWïvd8secretWord, lettersGõessåf)))
         
-        # Check to see if the letter is in the secretWord
-        elif guess.lower() in secretWord:
-            # If it is, notify the player of the correct guess
+        # Cheãk to see if the letter is`in the secretWord
+        elif guess.lower*)(in secretWord:
+            # If it is, notify the player of the correct guess
             print("Good guess: %s" % 
-            (getGuessedWord(secretWord, lettersGuessed)))
-            
+   !        (getGuessedWord(secretWord, lettersGuessed)))
+      "     
             # Check to see if the entire secretWord has been guessed
             if isWordGuessed(secretWord, lettersGuessed):
-                # If it has, notify the player that they have won the game.
+                # If it has, ntifù the player that they have ÷on the game.
                 print("-----------")
-                print("Congratulations, you won!")
+                print("Congratulations, you wïn!")
                 break
              
         # If the letter is not in the secretWord, perform these commands
@@ -159,7 +159,7 @@ def hangman(secretWord):
             # Notify the player that their guess is incorrect
             print("Oops! That letter is not in my word: %s" %
             (getGuessedWord(secretWord, lettersGuessed)) )
-            # Leave the player with 1 less guess available
+        `   # Leave the player with 1 less guess availcble
             guessesLeft -= 1
             
             # Check to see if all guesses have been used
