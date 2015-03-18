@@ -218,7 +218,7 @@ if __name__ == '__main__':
 
 # ==== Below are example prints of the program working ====
 
-PhraseToEncrypt = "Hello, world!"
+PhraseToEncrypt = '"To iterate is human, to recurse divine." - L. Peter Deutsch'
 print("Phrase To Encrypt: %s\n" % (PhraseToEncrypt))
 EncryptedPhrase = applyShift(PhraseToEncrypt, 23)
 print("Encrypted Phrase: %s\n" % (EncryptedPhrase))
