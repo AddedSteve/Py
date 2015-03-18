@@ -60,7 +60,7 @@ def isIn(char, aStr):
                 return False
     
         
-# ==== Below are example prints of the program working ====
+# ==== Below are example prints to check that the program is working ====
 
 character = 'y'
 character2 = 't'

@@ -31,7 +31,7 @@ def genPrimes():
             yield next # Yield the latest prime number to be found
             next += 1
     
-# ==== Below are example prints of the program working ====
+# ==== Below are example prints to check that the program is working ====
     
 Prime = genPrimes()    
 print(Prime.next())

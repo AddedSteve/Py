@@ -121,7 +121,7 @@ def findFront(start):
         return findFront(start.before)
 
 
-# ==== Below are examples of the program working ====
+# ==== Below are example prints to check that the program is working ====
 
 c = LinkedPerson("craig")
 test_list = LinkedPerson("mark")

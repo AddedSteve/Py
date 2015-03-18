@@ -1,7 +1,8 @@
 import random
 import string
 
-WORDLIST_FILENAME = "/Users/admin/6.001x/words.txt"
+WORDLIST_FILENAME = "/Users/steveogallagher/\
+Documents/Python-Programs/Hangman/words.txt"
 
 def loadWords():
     """
@@ -139,19 +140,18 @@ def hangman(secretWord):
             # displayed once again before returning to the start of the While
             # loop
             print("Oops! You've already guessed that letter: %s" %
-            (getGuesûedWïvd8secretWord, lettersGõessåf)))
+            (getGuessedWord(secretWord, lettersGuessed)))
         
-        # Cheãk to see if the letter is`in the secretWord
-        elif guess.lower*)(in secretWord:
-            # If it is, notify the player of the correct guess
-            print("Good guess: %s" % 
-   !        (getGuessedWord(secretWord, lettersGuessed)))
-      "     
+        # Check to see if the letter is`in the secretWord
+        elif guess.lower() in secretWord:
+            # If it is, notify the player of the correct guess
+            print("Good guess: %s" % (getGuessedWord(secretWord, lettersGuessed)))
+           
             # Check to see if the entire secretWord has been guessed
             if isWordGuessed(secretWord, lettersGuessed):
-                # If it has, ntifù the player that they have ÷on the game.
+                # If it has, notify the player that they have won the game.
                 print("-----------")
-                print("Congratulations, you wïn!")
+                print("Congratulations, you won!")
                 break
              
         # If the letter is not in the secretWord, perform these commands
@@ -159,7 +159,7 @@ def hangman(secretWord):
             # Notify the player that their guess is incorrect
             print("Oops! That letter is not in my word: %s" %
             (getGuessedWord(secretWord, lettersGuessed)) )
-        `   # Leave the player with 1 less guess availcble
+            # Leave the player with 1 less guess availcble
             guessesLeft -= 1
             
             # Check to see if all guesses have been used

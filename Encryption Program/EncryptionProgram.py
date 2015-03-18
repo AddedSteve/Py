@@ -216,7 +216,7 @@ if __name__ == '__main__':
     wordList = loadWords()
 
 
-# ==== Below are example prints of the program working ====
+# ==== Below are example prints to check that the program is working ====
 
 PhraseToEncrypt = '"To iterate is human, to recurse divine." - L. Peter Deutsch'
 print("Phrase To Encrypt: %s\n" % (PhraseToEncrypt))
