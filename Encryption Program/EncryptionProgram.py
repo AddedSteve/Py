@@ -2,7 +2,7 @@
 #
 # Part 1 - HAIL CAESAR!
 
-import string
+import string 
 import random
 
 WORDLIST_FILENAME = "/Users/admin/6.001x/Problem Set 5/words.txt"
