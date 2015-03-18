@@ -1,14 +1,3 @@
-def semordnilapWrapper(str1, str2):
-    # A single-length string cannot be semordnilap
-    if len(str1) == 1 or len(str2) == 1:
-        return False
-
-    # Equal strings cannot be semordnilap
-    if str1 == str2:
-        return False
-
-    return semordnilap(str1, str2)
-
 def semordnilap(str1, str2):
     '''
     A "semordnilap" is defined as a pair of words of which each word is the 
@@ -38,5 +27,31 @@ def semordnilap(str1, str2):
         
     else:
         return False
+        
+def semordnilapWrapper(str1, str2):
+    # A single-length string cannot be semordnilap
+    if len(str1) == 1 or len(str2) == 1:
+        return False
+
+    # Equal strings cannot be semordnilap
+    if str1 == str2:
+        return False
+
+    return semordnilap(str1, str2)
     
-print(semordnilapWrapper("and", "dna"))
+    
+# ==== Below are example prints to check that the program is working ====    
+    
+a1 = "and"
+a2 = "dna"
+b1 = "stab"
+b2 = "bats"
+c1 = "bold"
+c2 = "bolder"
+        
+print("Are %s and %s Semordnilap?\nAnswer: %s\n" % 
+(a1, a2, semordnilapWrapper(a1, a2)))
+print("Are %s and %s Semordnilap?\nAnswer: %s\n" % 
+(b1, b2, semordnilapWrapper(b1, b2)))
+print("Are %s and %s Semordnilap?\nAnswer: %s\n" % 
+(c1, c2, semordnilapWrapper(c1, c2)))
