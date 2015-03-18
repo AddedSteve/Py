@@ -1,12 +1,12 @@
 import string 
 import random
 
+# The path for the words.txt file should be edited according to it's location
 WORDLIST_FILENAME = "/Users/steveogallagher/Documents/\
 Python-Programs/Encryption Program/words.txt"
 
-# -----------------------------------
-# Helper code
-# (you don't need to understand this helper code)
+
+# === The following functions were provided by MIT ===
 def loadWords():
     """
     Returns a list of valid words. Words are strings of lowercase letters.
@@ -80,13 +80,9 @@ def getStoryString():
     return open("/Users/admin/6.001x/Problem Set 5/story.txt", "r").read()
 
 
-# (end of helper code)
-# -----------------------------------
+# End of functions provided by MIT ===
 
 
-#
-# Problem 1: Encryption
-#
 def buildCoder(shift):
     """
     Returns a dict that can apply a Caesar cipher to a letter.
