@@ -1,11 +1,8 @@
-# 6.00x Problem Set 6
-#
-# Part 1 - HAIL CAESAR!
-
 import string 
 import random
 
-WORDLIST_FILENAME = "/Users/admin/6.001x/Problem Set 5/words.txt"
+WORDLIST_FILENAME = "/Users/steveogallagher/Documents/\
+Python-Programs/Encryption Program/words.txt"
 
 # -----------------------------------
 # Helper code
