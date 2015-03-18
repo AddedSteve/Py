@@ -80,8 +80,9 @@ def getStoryString():
     return open("/Users/admin/6.001x/Problem Set 5/story.txt", "r").read()
 
 
-# End of functions provided by MIT ===
+# === End of functions provided by MIT ===
 
+# ===== My Encryption Functions =====
 
 def buildCoder(shift):
     """
@@ -92,32 +93,42 @@ def buildCoder(shift):
     shift: 0 <= int < 26
     returns: dict
     """
+    # Strings alphaU & alphaL are created in order to have an alphabetical 
+    # reference point for the amount of encryption shift required.
     alphaU = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     alphaL = 'abcdefghijklmnopqrstuvwxyz'
-    dict = {}
-    iter = 0
+    dict = {} 
+    iter = 0 
     newIter = 0
     
+    # The corresponding encrypted Uppercase letter is found for the given shift
     for letter in alphaU:
+        # For each letter, apply the shift and store it in dict{}
         if iter + shift < 26:
             dict[letter] = alphaU[iter + shift]
             iter += 1
         else:
+            # If the shift goes beyond 'Z', start at the beginning with newIter
             dict[letter] = alphaU[newIter]
             newIter += 1
-            
+    
+    # Iteration values are reset
     iter = 0
     newIter = 0
     
+    # The corresponding encrypted Lowercase letter is found for the given shift
     for letter in alphaL:
+        # For each letter, apply the shift and store it in dict{}
         if iter + shift < 26:
             dict[letter] = alphaL[iter + shift]
             iter += 1
         else:
+            # If the shift goes beyond 'z', start at the beginning with newIter
             dict[letter] = alphaL[newIter]
             newIter += 1
-            
-    return dict
+    
+    # Return the dictionary containing the keys and values according to shift
+    return dict 
 
 def applyCoder(text, coder):
     """
@@ -127,9 +138,10 @@ def applyCoder(text, coder):
     coder: dict with mappings of characters to shifted characters
     returns: text after mapping coder chars to original text
     """
-    dict = coder
-    newText = ""
+    dict = coder # dict is assigned to the dictionary created in buildCoder()
+    newText = "" # newText is initialised
     
+    # The coder is applied to each char (or letter) in text
     for char in text:
         if char in dict.keys():
             newText += dict[char]
@@ -151,9 +163,9 @@ def applyShift(text, shift):
     """
     return applyCoder(text, buildCoder(shift))
 
-#
-# Problem 2: Decryption
-#
+
+# ===== Decryption =====
+
 def findBestShift(wordList, text):
     """
     Finds a shift key that can decrypt the encoded text.
@@ -161,8 +173,8 @@ def findBestShift(wordList, text):
     text: string
     returns: 0 <= int < 26
     """
+    # Initial variables are set to 0
     testKey = 0
-    bestEffort = 0
     savedBest = 0
     validWords = 0
     savedKey = 0
@@ -173,24 +185,19 @@ def findBestShift(wordList, text):
         
         # Split the text into individual words and save them into a list
         testList = testString.split(" ")
-    
-        # Save the length of the list
-        listLength = len(testList)
-    
+
         # For each word:
         for word in testList:
             #check to see if it is a word
             if isWord(wordList, word):
             #if it is a word, add 1 to a saved variable to count it
                 validWords += 1
-            
-        bestEffort = validWords
 
             
         # If this is the highest amount so far, save the key value and try 
         # another key.
-        if bestEffort > savedBest:
-            savedBest = bestEffort
+        if validWords > savedBest:
+            savedBest = validWords
             savedKey = testKey
             
             testKey += 1
@@ -198,22 +205,8 @@ def findBestShift(wordList, text):
         else:
             testKey += 1
             validWords = 0
-    # If none of the keys result in 100% correct words, return best case
+    # Return the key which resulted in the most valid words
     return (savedKey)
-
-
-def decryptStory():
-    """
-    Using the methods you created in this problem set,
-    decrypt the story given by the function getStoryString().
-    Use the functions getStoryString and loadWords to get the
-    raw data you need.
-
-    returns: string - story in plain text
-    """
-    story = getStoryString()
-    wordList = loadWords()
-    return applyShift(story, findBestShift(wordList, story))
 
 #
 # Build data structures used for entire session and run encryption
@@ -221,6 +214,9 @@ def decryptStory():
 
 if __name__ == '__main__':
     wordList = loadWords()
+
+
+# ==== Below are example prints of the program working ====
 
 PhraseToEncrypt = "Hello, world!"
 print("Phrase To Encrypt: %s\n" % (PhraseToEncrypt))
