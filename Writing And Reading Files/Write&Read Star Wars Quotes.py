@@ -1,4 +1,4 @@
-# Code written by Steve O'Gallagher
+# Code written by Steve O'Gallagher - 2015
 
 def createFile():
     '''
