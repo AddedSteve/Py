@@ -42,7 +42,6 @@ def readFile():
         if contents[i] != "":
             if contents[i][0] in list:
                 print("%s" % (contents[i]))
-                x += 1
     
     # Close the file
     file.close()
