@@ -30,15 +30,20 @@ class LinkedPerson(object):
         return self.name
         
         
-def insert(CurrentPerson, newLinkedPerson):
+def insert(CurrentPerson, newLinkedPerson, after = 0, before = 0):
     """
     CurrentPerson: a LinkedPerson that is part of a doubly linked list
     newLinkedPerson:  a LinkedPerson with no links 
     This procedure appropriately inserts newLinkedPerson into the linked list that CurrentPerson is a part of.    
     """
+    
     # Ensure that each Person's name is lower case for comparisons
     CurrentPersonName = CurrentPerson.name.lower()
     newLinkedPersonName = newLinkedPerson.name.lower()
+    
+    # Save the next LinkedPerson as otherLinkedPerson
+    afterLinkedPerson = CurrentPerson.after
+    beforeLinkedPerson = CurrentPerson.before
     
     # Create a list containing the two names to sort alphabetically
     list = [CurrentPersonName, newLinkedPersonName]
@@ -47,135 +52,61 @@ def insert(CurrentPerson, newLinkedPerson):
     # If the CurrentPerson's name is alphabetically before the newLinkedPerson's
     # name, perform the following commands
     if list[0] == CurrentPersonName:
-        
+        after = 1
         # If CurrentPerson is last in the list, 
         if CurrentPerson.after == None:
             # The newLinkedPerson is placed after CurrentPerson
             CurrentPerson.setAfter(newLinkedPerson)
             newLinkedPerson.setBefore(CurrentPerson)
-            
-        # If CurrentPerson is not last in the list,
+        
+        elif CurrentPerson.after.name.lower() == newLinkedPersonName:
+            # Place the newLinkedPerson after the CurrentPerson and 
+            # before the otherLinkedPerson
+            CurrentPerson.setAfter(newLinkedPerson)
+            newLinkedPerson.setBefore(CurrentPerson)
+            newLinkedPerson.setAfter(afterLinkedPerson)
+            afterLinkedPerson.setBefore(newLinkedPerson)
+         
+        elif before == 1 and after == 1: 
+            # Place the newLinkedPerson after the CurrentPerson and 
+            # before the otherLinkedPerson
+            CurrentPerson.setAfter(newLinkedPerson)
+            newLinkedPerson.setBefore(CurrentPerson)
+            newLinkedPerson.setAfter(afterLinkedPerson)
+            afterLinkedPerson.setBefore(newLinkedPerson)          
         else:
-            # Save the next LinkedPerson as otherLinkedPerson and save the 
-            # CurrentPerson as saveLinkedPerson
-            otherLinkedPerson = CurrentPerson.after
-            saveLinkedPerson = CurrentPerson
-            
-            # Perform the following commands until you reach the end of the list
-            while otherLinkedPerson != None:
-            
-                # If the next LinkedPerson has the same name as newLinkedPerson
-                if otherLinkedPerson.name.lower() == newLinkedPersonName:
-                    # Place the newLinkedPerson after the saveLinkedPerson and 
-                    # before the otherLinkedPerson
-                    saveLinkedPerson.setAfter(newLinkedPerson)
-                    newLinkedPerson.setBefore(saveLinkedPerson)
-                    newLinkedPerson.setAfter(otherLinkedPerson)
-                    otherLinkedPerson.setBefore(newLinkedPerson)
-                    break
-                    
-                # If the next LinkedPerson's name differs from newLinkedPerson
-                else:
-                    # Create an alphabetical list containing the two names
-                    list = [newLinkedPersonName, otherLinkedPerson.name.lower()]
-                    list.sort()
-                    
-                    # If the newLinkedPerson's name is alphabetically before the 
-                    # next LinkedPerson's name:
-                    if list[0] == newLinkedPersonName:
-                        # Place the newLinkedPerson after the saveLinkedPerson
-                        # and before the otherLinkedPerson
-                        saveLinkedPerson.setAfter(newLinkedPerson)
-                        newLinkedPerson.setBefore(saveLinkedPerson)
-                        newLinkedPerson.setAfter(otherLinkedPerson)
-                        otherLinkedPerson.setBefore(newLinkedPerson)
-                        break
-                    
-                    # If the newLinkedPerson's name is alphabetically after the 
-                    # next LinkedPerson's name, and the next LinkedPerson is not
-                    # the last one in the list:    
-                    elif (list[1] == newLinkedPersonName 
-                          and otherLinkedPerson.after != None):
-                        # Save the next LinkedPerson in the list as the current 
-                        # person to look at, and save the LinkedPerson after the 
-                        # next LinkedPerson as the new "next LinkedPerson"
-                        saveLinkedPerson = otherLinkedPerson
-                        otherLinkedPerson = otherLinkedPerson.after
-                        
-                    # If the newLinkedPerson's name is alphabetically after the 
-                    # next LinkedPerson's name, and the next LinkedPerson is the
-                    # last one in the list:   
-                    else:
-                        # Place the newLinkedPerson after the next LinkedPerson
-                        otherLinkedPerson.setAfter(newLinkedPerson)
-                        newLinkedPerson.setBefore(otherLinkedPerson)
-                        break
+            after = 1
+            insert(afterLinkedPerson, newLinkedPerson, after, before)
     
     # If the CurrentPerson's name is alphabetically after the newLinkedPerson's
     # name, perform the following commands                
     else: 
+        before = 1
         # If CurrentPerson is first in the list, 
         if CurrentPerson.before == None:
             # The newLinkedPerson is placed before CurrentPerson
-            newLinkedPerson.setAfter(CurrentPerson)
             CurrentPerson.setBefore(newLinkedPerson)
+            newLinkedPerson.setAfter(CurrentPerson)
+        
+        elif CurrentPerson.before.name.lower() == newLinkedPersonName:
+            # Place the newLinkedPerson before the CurrentPerson and 
+            # after the otherLinkedPerson
+            CurrentPerson.setBefore(newLinkedPerson)
+            newLinkedPerson.setAfter(CurrentPerson)
+            newLinkedPerson.setBefore(beforeLinkedPerson)
+            beforeLinkedPerson.setAfter(newLinkedPerson)
             
-        # If CurrentPerson is not first in the list,
+        elif before == 1 and after == 1: 
+            # Place the newLinkedPerson before the CurrentPerson and 
+            # after the otherLinkedPerson
+            CurrentPerson.setBefore(newLinkedPerson)
+            newLinkedPerson.setAfter(CurrentPerson)
+            newLinkedPerson.setBefore(beforeLinkedPerson)
+            beforeLinkedPerson.setAfter(newLinkedPerson)          
         else:
-            # Save the previous LinkedPerson as otherLinkedPerson and save the 
-            # CurrentPerson as saveLinkedPerson
-            otherLinkedPerson = CurrentPerson.before
-            saveLinkedPerson = CurrentPerson
+            before = 1
+            insert(beforeLinkedPerson, newLinkedPerson, after, before)  
             
-            # Perform the following commands until you reach the end of the list
-            while otherLinkedPerson != None:
-                
-                # If the next LinkedPerson has the same name as newLinkedPerson
-                if otherLinkedPerson.name.lower() == newLinkedPersonName:
-                    # Place the newLinkedPerson before the saveLinkedPerson and 
-                    # after the otherLinkedPerson
-                    otherLinkedPerson.setAfter(newLinkedPerson)
-                    newLinkedPerson.setBefore(otherLinkedPerson)
-                    newLinkedPerson.setAfter(saveLinkedPerson)
-                    saveLinkedPerson.setBefore(newLinkedPerson)
-                    break
-                    
-                # If the next LinkedPerson's name differs from newLinkedPerson
-                else:
-                    # Create an alphabetical list containing the two names
-                    list = [newLinkedPersonName, otherLinkedPerson.name.lower()]
-                    list.sort()
-                    
-                    # If the newLinkedPerson's name is alphabetically after the 
-                    # next LinkedPerson's name:
-                    if list[0] == otherLinkedPerson.name.lower():
-                        # Place the newLinkedPerson before the saveLinkedPerson
-                        # and after the otherLinkedPerson
-                        otherLinkedPerson.setAfter(newLinkedPerson)
-                        newLinkedPerson.setBefore(otherLinkedPerson)
-                        newLinkedPerson.setAfter(saveLinkedPerson)
-                        saveLinkedPerson.setBefore(newLinkedPerson)
-                        break
-                        
-                    # If the newLinkedPerson's name is alphabetically before the 
-                    # next LinkedPerson's name, and the next LinkedPerson is not
-                    # the first one in the list:      
-                    elif (list[1] == otherLinkedPerson.name.lower() 
-                        # Save the next LinkedPerson in the list as the current 
-                        # person to look at, and save the LinkedPerson before 
-                        # the next LinkedPerson as the new "next LinkedPerson"
-                        and otherLinkedPerson.before != None):
-                        saveLinkedPerson = otherLinkedPerson
-                        otherLinkedPerson = otherLinkedPerson.before
-                        
-                    # If the newLinkedPerson's name is alphabetically before the 
-                    # next LinkedPerson's name, and the next LinkedPerson is the
-                    # first one in the list:  
-                    else:
-                        # Place the newLinkedPerson before the next LinkedPerson
-                        otherLinkedPerson.setBefore(newLinkedPerson)
-                        newLinkedPerson.setAfter(otherLinkedPerson)
-                        break
 
 def findFront(start):
     """
@@ -263,4 +194,3 @@ print("   - %s has been placed after %s and before %s." %
 print("\nFind the LinkedPerson at the front of the list.")
 answer = findFront(brian)   
 print("The LinkedPerson at the front of the list is %s" % (answer.myName()))                    
-        
