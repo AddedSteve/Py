@@ -194,20 +194,7 @@ def findFront(start):
 
 # ==== Below are example prints to check that the program is working ====
 
-c = LinkedPerson("craig")
-test_list = LinkedPerson("mark")
-mar = LinkedPerson("martha")
-
-insert(test_list, LinkedPerson("sam"))
-insert(test_list, LinkedPerson("nick"))
-insert(test_list, c)
-insert(c, LinkedPerson("xanthi"))
-insert(test_list, LinkedPerson("jayne"))
-insert(c, mar)
-
-print(test_list.before.name)
-print(mar.before.name)
-
+# Create LinkedPerson class objects
 eric = LinkedPerson('Eric')
 andrew = LinkedPerson('Andrew')
 ruth = LinkedPerson('Ruth')
@@ -218,20 +205,62 @@ george = LinkedPerson('george')
 brian = LinkedPerson('brian')
 Zod = LinkedPerson('Zod')
 
-
+# Insert LinkedPerson objects into a doubly-linked list
+print("Insert Andrew at Eric's point in the list")
 insert(eric, andrew)
+print("   - %s has been placed before %s." % 
+    (LinkedPerson.getBefore(eric).name,
+     LinkedPerson.getAfter(andrew).name))
+
+print("Insert Ruth at Eric's point in the list")
 insert(eric, ruth)
+print("   - %s has been placed after %s." % 
+    (LinkedPerson.getAfter(eric).name,
+     LinkedPerson.getBefore(ruth).name))
+
+print("Insert Fred at Eric's point in the list")
 insert(eric, fred)
+print("   - %s has been placed after %s and before %s." % 
+    (LinkedPerson.getAfter(eric).name,
+     LinkedPerson.getBefore(fred).name,
+     LinkedPerson.getAfter(fred).name))
+
+print("Insert martha at Ruth's point in the list")
 insert(ruth, martha)
+print("   - %s has been placed after %s and before %s." % 
+    (LinkedPerson.getBefore(ruth).name,
+     LinkedPerson.getBefore(martha).name,
+     LinkedPerson.getAfter(martha).name))
+
+print("Insert martha at Eric's point in the list")
 insert(eric, LinkedPerson('martha'))
+print("   - %s has been placed after %s and before %s." % 
+    (martha.name,
+     LinkedPerson.getBefore(martha).name,
+     LinkedPerson.getAfter(martha).name))
+
+print("Insert zed at Ruth's point in the list")
 insert(ruth, zed)
+print("   - %s has been placed after %s." % 
+    (zed.name,
+     LinkedPerson.getBefore(zed).name))
+
+print("Insert george at Eric's point in the list")
 insert(eric, george)
+print("   - %s has been placed after %s and before %s." % 
+    (george.name,
+     LinkedPerson.getBefore(george).name,
+     LinkedPerson.getAfter(george).name))
+
+print("Insert brian at martha's point in the list")
 insert(martha, brian)
-insert(Zod, brian)
+print("   - %s has been placed after %s and before %s." % 
+    (brian.name,
+     LinkedPerson.getBefore(brian).name,
+     LinkedPerson.getAfter(brian).name))
 
-print(LinkedPerson.getBefore(eric).name)
-
-p = LinkedPerson('percival')
-answer = findFront(p)   
-print(answer.myName())                     
+# Test the findFront() function
+print("\nFind the LinkedPerson at the front of the list.")
+answer = findFront(brian)   
+print("The LinkedPerson at the front of the list is %s" % (answer.myName()))                    
         
