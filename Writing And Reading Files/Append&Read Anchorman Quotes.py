@@ -16,7 +16,7 @@ def createQuotes():
     # Write the title for this section
     file.write("Anchorman Quotes\r\n")
        
-    # Write in the Anchoman quotes       
+    # Write in the Anchorman quotes       
     for i in range(5):
         file.write("%d. %s\r\n" % (i+1, quotes[i]))
         

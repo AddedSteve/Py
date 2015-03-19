@@ -2,7 +2,7 @@
 
 def createFile():
     '''
-    Creates a file called "Quotes.txt" and write Star Wars quotes into the file.
+    Creates a file called "Quotes.txt" and writes Star Wars quotes into the file.
     '''
     # Prepare the file for writing
     file = open("Quotes.txt", "w+")
@@ -39,8 +39,7 @@ def readFile():
 
     # Find and print all quotes in the file
     for i in range(len(contents)):
-        if contents[i] != "":
-            if contents[i][0] in list:
+        if contents[i] != "" and contents[i][0] in list:
                 print("%s" % (contents[i]))
     
     # Close the file
