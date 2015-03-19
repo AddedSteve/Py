@@ -95,8 +95,8 @@ def buildCoder(shift):
     """
     # Strings alphaU & alphaL are created in order to have an alphabetical 
     # reference point for the amount of encryption shift required.
-    alphaU = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    alphaL = 'abcdefghijklmnopqrstuvwxyz'
+    alphaU = string.ascii_uppercase
+    alphaL = string.ascii_lowercase
     dict = {} 
     iter = 0 
     newIter = 0
