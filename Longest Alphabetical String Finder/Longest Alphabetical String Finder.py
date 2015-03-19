@@ -1,66 +1,50 @@
-alpha = "abcdefghijklmnopqrstuvwxyz" #String containing the alphabet
+import string
 
 
-def checker(s): 
+def checker(s, current = "", longest = "", position = 0): 
     """
     This is a function that will examine a string argument to determine the
     longest substring which is in alphabetical order
     """
+    #An ordered alphabetical string is created for comparison
+    alpha = string.ascii_lowercase
     
-    #Initial values
-    iter = 0
-    number = 0 
-    longeststring = ""
-    save = ""
+    # If s is an empty string, inform the user of the error
+    if s == "":
+        return "The string you entered has no length"
+    # Otherwise perform the tasks of the checker function
+    else:    
+        # If this is the first time through, add the first character to current
+        if current == "":
+            current += s[0]
+            if len(s) >= 2:
+                return checker(s[1:], current, current, alpha.find(s[0]))
+            else: # If s only contains 1 character, return longest string
+                return current
     
-    #While loop plays until all characters in the string are examined
-    while (int(iter) < int(len(s))):
-        for letter in s:
-            if save == "":
-                save += letter #adds the current letter to the 'save' string
-                position1 = alpha.find(letter) #assigns a number to the letter
-                
-                #This condition tests to see if current string is longest
-                if len(save) > len(longeststring):
-                        longeststring = save    #saves longest string so far
-                                                #into object 'longeststring'
-                        iter += 1
-                else:
-                    iter += 1
-                    
+        # Check the order of the last current letter and first s letter  
+        elif position <= alpha.find(s[0]):
+            current += s[0]
+            if len(current) > len(longest):
+                longest = current
+            if len(s) >= 2: 
+                return checker(s[1:], current, longest, alpha.find(s[0]))
+            # If s only contains 1 character, return longest string
+            elif len(current) > len(longest):
+                return current
             else:
-                position2 = alpha.find(letter)
-                
-                if (position2 == position1): #compares the order of the two most
-                    save += letter           #recent letters examined.
-                    
-                    if len(save) > len(longeststring):
-                        longeststring = save
-                        iter += 1
-                    else:
-                        iter += 1
-                        
-                elif (position2 > position1):
-                    save += letter
-                    position1 = position2
-                    
-                    if len(save) > len(longeststring):
-                        longeststring = save
-                        iter += 1
-                    else:
-                        iter += 1
-                        
-                elif (position2 < position1):
-                    #if the new letter is alphabetically earlier than the old
-                    #letter, a new search must begin
-                    save = ""
-                    save += letter
-                    position1 = position2
-                    iter += 1
-                else:
-                    return longeststring
-                    
-        return longeststring #returns the longest substring out of the function
+                return longest
+            
+        # If the next letter is earlier in alpha:
+        else:
+            if len(current) > len(longest):
+                longest = current
+            current = s[0]
+            if len(s) >= 2:
+                return checker(s[1:], current, longest, alpha.find(s[0]))
+            # If s only contains 1 character, return longest string
+            else:
+                return longest
 
 #The user is asked to enter a string for testing
 answer = checker(s = raw_input("Please enter a string: "))
