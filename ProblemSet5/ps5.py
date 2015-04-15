@@ -65,7 +65,6 @@ def load_map(mapFilename):
             MITgraph.addNode(endNode)
             
         edge = WeightedEdge(startNode,endNode,totalDistance,outdoorDistance)
-        
         MITgraph.addEdge(edge)
     
     return MITgraph
@@ -101,45 +100,73 @@ def bruteForceSearch(digraph, start, end, maxTotalDist, maxDistOutdoors):
         If there exists no path that satisfies maxTotalDist and
         maxDistOutdoors constraints, then raises a ValueError.
     """
-    def getTotalDistances(path):
+    def getTotalDistances(validPaths, digraph):
         total = 0
-        for edge in path:
-            total += edge.totalDistance
+        start = 0
+        end = 1
+        for path in validPaths:
+            print(digraph.edges[path[start]])
+            allEdges = digraph.edges[path[start]]
+            for edge in allEdges:
+                if edge[0] == path[end]:
+                    total += edge.totalDistance
         return total
     
-    def getTotalOutdoor(path):
+    def getTotalOutdoor(validPaths):
         total = 0
-        for edge in path:
+        for edge in path[:-1]:
             total += edge.outdoorDistance
         return total
-    
-    for node in digraph.nodes:
-        if str(node) == start:
-            startingNode = node
-        if str(node) == end:
-            endingNode = node
-            
-    print("Staring at %s\nEnding at %s" % (startingNode, endingNode))
-    
-    totalList = [[edge] for edge in digraph.childrenOf(WeightedEdge(startingNode))]
-    paths = []
-    
-    print(totalList)
-    
-    while totalList:
-        path = totalList.pop(-1)
-        
-        if path[-1].getDestination().getName() == end:
-            if getTotalOutdoor(path) <= maxDistOutdoors:
-                paths.append(path)
-                continue
-                
-    print(totalList)
-       
      
-        
+    def returnPath(currentNode, end, digraph, path = [], seen = []):
+        if currentNode not in seen:
+            children = digraph.childrenOf(currentNode)
+            #print("Children of this Node: %s" % children)
+            if str(currentNode) == str(end):
+                path.append(end)
+                #print("yes")
+            else:
+                if end in children:
+                    path.append(currentNode)
+                    path.append(end)
+                else:
+                    path.append(currentNode)
+                    #print("Updated path: %s" % path)
+                    seen.append(currentNode)
+                    returnPath(children[-1], end, digraph, path, seen)
+        return path
+            
+    startNode = Node(start)
+    endNode = Node(end)
     
-    return
+    totalList = [edge for edge in digraph.childrenOf(startNode)] 
+    #print(totalList) 
+    validPaths = []
+    while totalList:
+        attempt = totalList.pop(-1)
+        result = returnPath(attempt, endNode, digraph, path = [startNode])
+        if endNode in result:
+            validPaths.append(result)
+            
+    print("Valid paths: %s" % validPaths)
+    getTotalDistances(validPaths, digraph)
+    #Try1 = totalList.pop(-1)
+    #print("Send in %s" % Try1)
+    #paths = []
+    #path.append(returnPath(Try1, endNode, digraph, path = [startNode]))
+    #Try2 = totalList.pop(-1)
+    #print("Send in %s" % Try2)
+    #path.append(returnPath(Try2, endNode, digraph, path = [startNode]))
+    #Try3 = totalList.pop(-1)
+    #print("Send in %s" % Try3)
+    #path.append(returnPath(Try3, endNode, digraph, path = [startNode]))
+    #Try4 = totalList.pop(-1)
+    #print("Send in %s" % Try4)
+    #path.append(returnPath(Try4, endNode, digraph, path = [startNode]))
+    #print(path)
+    #print(totalList) 
+        
+
 
 #
 # Problem 4: Finding the Shorest Path using Optimized Search Method
