@@ -107,12 +107,15 @@ def bruteForceSearch(digraph, start, end, maxTotalDist, maxDistOutdoors):
             end = 1
             total = 0
             allEdges = digraph.edges[path[start]]
+            #print(allEdges)
             for node in range(len(path) - 1):
                 for edge in allEdges:
                     if edge[0] == path[end]:
+                        #print(edge[1].getTotalDistance())
                         total += edge[1].getTotalDistance()
                 start += 1
                 end += 1
+            #print("Total distance for this path = %s" % total)
             allDistances.append(total)
         return allDistances
     
@@ -123,26 +126,32 @@ def bruteForceSearch(digraph, start, end, maxTotalDist, maxDistOutdoors):
             end = 1
             total = 0
             allEdges = digraph.edges[path[start]]
+            #print(allEdges)
             for node in range(len(path) - 1):
                 for edge in allEdges:
                     if edge[0] == path[end]:
+                        #print(edge[1].getOutdoorDistance())
                         total += edge[1].getOutdoorDistance()
                 start += 1
                 end += 1
+            #print("Total outdoor distance for this path = %s" % total)
             allOutdoors.append(total)
         return allOutdoors
      
     def returnPath(currentNode, end, digraph, path = [], seen = []):
         if currentNode not in seen:
             children = digraph.childrenOf(currentNode)
+            #print("Children of this Node: %s" % children)
             if str(currentNode) == str(end):
                 path.append(end)
+                #print("yes")
             else:
                 if end in children:
                     path.append(currentNode)
                     path.append(end)
                 else:
                     path.append(currentNode)
+                    #print("Updated path: %s" % path)
                     seen.append(currentNode)
                     returnPath(children[-1], end, digraph, path, seen)
         return path
@@ -151,30 +160,43 @@ def bruteForceSearch(digraph, start, end, maxTotalDist, maxDistOutdoors):
     endNode = Node(end)
     
     totalList = [edge for edge in digraph.childrenOf(startNode)] 
+    #print(totalList) 
     validPaths = []
     while totalList:
         attempt = totalList.pop(-1)
         result = returnPath(attempt, endNode, digraph, path = [startNode])
         if endNode in result:
             validPaths.append(result)
-        
+            
+    print("Valid paths: %s" % validPaths)
+    print("Making a list of Total Distances for all paths")
     allDistances = getTotalDistances(validPaths, digraph)
+    print("    Path distances: %s" % allDistances)
+    
+    print("Making a list of Total Outdoor Distances for all paths")
     allOutdoors = getTotalOutdoor(validPaths, digraph)
+    print("    Path outdoor distances: %s" % allOutdoors)
 
     okPaths = []
     updatedDist = []
-
+    print("\nDiscard paths which don't satisfy the criteria")
+    
+    print("Paths before the cull:\n    %s" % validPaths)
     for distance in range(len(allDistances)):
-        if allDistances[distance] < maxTotalDist and allOutdoors[distance] < maxDistOutdoors:
+        if allDistances[distance] <= maxTotalDist and allOutdoors[distance] <= maxDistOutdoors:
             okPaths.append(validPaths[distance])
             updatedDist.append(allDistances[distance])
     try:
         okPaths[0]
+        print(okPaths[0])
     except:
         raise ValueError
-    
-            
+        
+    print("Paths after the cull:\n    %s" % okPaths)
+
+    print("Of the remaining paths, return the shortest path")
     shortest = maxTotalDist
+    bestPath = 0
     for i in range(len(okPaths)):
         distance = updatedDist[i]
         if distance < shortest:
@@ -184,9 +206,9 @@ def bruteForceSearch(digraph, start, end, maxTotalDist, maxDistOutdoors):
     pathString = []
     for j in range(len(bestPath)):
             pathString.append(str(bestPath[j]))
+    print("Shortest path is %s" % pathString)
     
     return pathString
-
 
 #
 # Problem 4: Finding the Shorest Path using Optimized Search Method
@@ -238,13 +260,7 @@ if __name__ == '__main__':
      print "Find the shortest-path from Building 32 to 56"
      expectedPath1 = ['32', '56']
      brutePath1 = bruteForceSearch(mitMap, '32', '56', LARGE_DIST, LARGE_DIST)
-     #brutePath2 = bruteForceSearch(mitMap, "1", "3", 10, 10)
-     #print(brutePath2)
-     print(bruteForceSearch(mitMap, "1", "3", 17, 8))
-     #['1', '2', '4', '3']
-     bruteForceSearch(mitMap, "1", "5", 23, 11)
-     #['1', '2', '4', '3', '5']
-     bruteForceSearch(map5, "4", "5", 21, 11)
+     brutePath2 = bruteForceSearch(mitMap, "1", "3", 18, 0)
 #     dfsPath1 = directedDFS(mitMap, '32', '56', LARGE_DIST, LARGE_DIST)
 #     print "Expected: ", expectedPath1
 #     print "Brute-force: ", brutePath1
