@@ -260,7 +260,7 @@ if __name__ == '__main__':
      print "Find the shortest-path from Building 32 to 56"
      expectedPath1 = ['32', '56']
      brutePath1 = bruteForceSearch(mitMap, '32', '56', LARGE_DIST, LARGE_DIST)
-     brutePath2 = bruteForceSearch(mitMap, "1", "3", 18, 0)
+     brutePath2 = bruteForceSearch(mitMap, "1", "3", 80, 80)
 #     dfsPath1 = directedDFS(mitMap, '32', '56', LARGE_DIST, LARGE_DIST)
 #     print "Expected: ", expectedPath1
 #     print "Brute-force: ", brutePath1

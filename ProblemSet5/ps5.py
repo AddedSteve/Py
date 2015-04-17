@@ -157,35 +157,41 @@ def bruteForceSearch(digraph, start, end, maxTotalDist, maxDistOutdoors):
         result = returnPath(attempt, endNode, digraph, path = [startNode])
         if endNode in result:
             validPaths.append(result)
-        
+    
     allDistances = getTotalDistances(validPaths, digraph)
     allOutdoors = getTotalOutdoor(validPaths, digraph)
+    
+
 
     okPaths = []
     updatedDist = []
 
     for distance in range(len(allDistances)):
-        if allDistances[distance] < maxTotalDist and allOutdoors[distance] < maxDistOutdoors:
+        if allDistances[distance] <= maxTotalDist and allOutdoors[distance] <= maxDistOutdoors:
             okPaths.append(validPaths[distance])
             updatedDist.append(allDistances[distance])
-    try:
-        okPaths[0]
-    except:
+            
+    shortest = maxTotalDist + 1
+    bestPath = None
+    
+    if len(okPaths) != 0:
+        for i in range(len(okPaths)):
+
+            distance = updatedDist[i]
+            if distance < shortest:
+                shortest = distance
+                bestPath = okPaths[i]
+            
+        pathString = []
+        if bestPath != None:
+            for j in range(len(bestPath)):
+                pathString.append(str(bestPath[j]))
+
+    if bestPath == None:
         raise ValueError
     
-            
-    shortest = maxTotalDist
-    for i in range(len(okPaths)):
-        distance = updatedDist[i]
-        if distance < shortest:
-            shortest = distance
-            bestPath = okPaths[i]
-            
-    pathString = []
-    for j in range(len(bestPath)):
-            pathString.append(str(bestPath[j]))
-    
-    return pathString
+    else:
+        return pathString
 
 
 #
@@ -237,14 +243,14 @@ if __name__ == '__main__':
      print "Test case 1:"
      print "Find the shortest-path from Building 32 to 56"
      expectedPath1 = ['32', '56']
-     brutePath1 = bruteForceSearch(mitMap, '32', '56', LARGE_DIST, LARGE_DIST)
+     #brutePath1 = bruteForceSearch(mitMap, '32', '56', LARGE_DIST, LARGE_DIST)
      #brutePath2 = bruteForceSearch(mitMap, "1", "3", 10, 10)
      #print(brutePath2)
-     print(bruteForceSearch(mitMap, "1", "3", 17, 8))
+     bruteForceSearch(mitMap, "1", "3", 25, 100)
      #['1', '2', '4', '3']
-     bruteForceSearch(mitMap, "1", "5", 23, 11)
+     #bruteForceSearch(mitMap, "1", "5", 23, 11)
      #['1', '2', '4', '3', '5']
-     bruteForceSearch(map5, "4", "5", 21, 11)
+     #bruteForceSearch(map5, "4", "5", 21, 11)
 #     dfsPath1 = directedDFS(mitMap, '32', '56', LARGE_DIST, LARGE_DIST)
 #     print "Expected: ", expectedPath1
 #     print "Brute-force: ", brutePath1
